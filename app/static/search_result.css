@@ -1,0 +1,51 @@
+div {
+    margin: 0px 0px;
+    padding: 0px 0px;
+}
+
+/* Styling for index.html */
+body,h1,h2,h3,h4,h5 {
+    font-family: "Raleway", sans-serif
+}
+
+html, body {
+    min-height: 100%;
+    padding: 0px 0px;
+    margin: 0 0;
+}
+
+
+
+.w3-light-grey.w3-content {
+    padding: 0px 0px;
+    margin: 0;
+    max-width: none;
+}
+
+.w3-third img{
+    margin-bottom: -6px;
+    opacity: 0.8;
+    cursor: pointer
+}
+
+.w3-third img:hover{
+    opacity: 1
+}
+
+.titleSection {
+    height: 400px;
+    width: 100%;
+/*    We have to put the background-image css inline*/
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    padding: 0px 0px;
+    background-attachment: fixed;
+    text-align: center;
+}
+
+.w3-content {
+    margin: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
