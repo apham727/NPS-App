@@ -1,6 +1,6 @@
-/* Styling for index.html */
-body,h1,h2,h3,h4,h5 {
-    font-family: "Raleway", sans-serif
+div {
+    margin: 0px 0px;
+    padding: 0px 0px;
 }
 
 html, body {
@@ -8,6 +8,7 @@ html, body {
     padding: 0px 0px;
     margin: 0 0;
 }
+
 
 .w3-light-grey.w3-content {
     padding: 0px 0px;
@@ -25,9 +26,18 @@ html, body {
     opacity: 1
 }
 
+.w3-input {
+    background-color: transparent;
+    box-shadow: 0 6px 6px rgba(10,16,20,.15), 0 0 52px rgba(10,16,20,.12);
+    border-bottom: none;
+}
+
+.w3-center {
+    font-size: 50px;
+}
 
 .w3-container.w3-light-grey.w3-padding-32.w3-padding-large {
-    background-image: url("yosemite.jpg");
+    background-image: url("../img/yosemite.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -37,3 +47,11 @@ html, body {
     background-attachment: fixed;
 }
 
+
+.input-medium.bfh-states {
+    width: 20px;
+}
+
+.state_form .btn-default {
+    display: inline-block;
+}

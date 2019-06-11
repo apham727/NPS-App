@@ -15,13 +15,6 @@ html, body {
 }
 
 
-
-.w3-light-grey.w3-content {
-    padding: 0px 0px;
-    margin: 0;
-    max-width: none;
-}
-
 .w3-third img{
     margin-bottom: -6px;
     opacity: 0.8;
@@ -44,8 +37,22 @@ html, body {
     text-align: center;
 }
 
-.w3-content {
-    margin: 0;
-    margin-left: 0;
-    margin-right: 0;
+.titleSection h1 {
+    font-size: 50px;
+    font-weight: bold;
 }
+
+.w3-content {
+    width: 100% !important;
+    margin: 0 auto;
+    flex: 1 1 100%;
+}
+
+.w3-container {
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100% !important;
+}
+

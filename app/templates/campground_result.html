@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" type="text/css" href="../static/search_result.css">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search_result.css')}}">
+
 <head>
     <style>
         .titleSection {
@@ -21,12 +23,6 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
 <body class="w3-light-grey w3-content">
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-green w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
-  <h3 class="w3-padding-64 w3-center">All You Need to <br> to Explore the National Parks <br> in One Place!</h3>
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
-  <a href="/" onclick="w3_close()" class="w3-bar-item w3-button">BACK TO SEARCH</a>
-</nav>
 
 <!-- Top menu on small screens -->
 <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
@@ -38,17 +34,15 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px">
+<div class="w3-main">
 
   <!-- Push down content on small screens -->
   <div class="w3-hide-large" style="margin-top:83px"></div>
 
 
 
-
-
   <!-- Articles -->
-  <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="contact">
+  <div class="w3-container">
     <div class="w3-content">
         <div class="titleSection">
             <br>
@@ -58,19 +52,9 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         </div>
 
         <p> {{ description}} </p>
-        <h2>Alerts</h2>
-        <ul class="list-group">
-            {% for alert in alerts %}
-                <li class="list-group-item"><p><a href = "{{ alert['url'] }}" target="_blank"> {{alert['description']}} </a></p></li>
-            {% endfor %}
-        </ul>
 
-        <h3>News</h3>
-        <ul class="list-group">
-            {% for news_article in news_articles %}
-                <li class="list-group-item"><p><a href = "{{ news_article['url'] }}" target="_blank"> {{news_article['title']}} </a></p></li>
-            {% endfor %}
-        </ul>
+        <a href="{{ reservationsUrl}}" target="_blank">Reserve your spot at this campground here</a>
+
     </div>
   </div>
 

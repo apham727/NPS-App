@@ -4,23 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-  <link rel="stylesheet" type="text/css" href="../static/style.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-formhelpers.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css.map')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css.map')}}">
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js.map') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-formhelpers.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-formhelpers-languages.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-formhelpers-states.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.1.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
+
 </head>
 <body class="w3-light-grey w3-content">
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-green w3-animate-left w3-text-grey w3-collapse w3-top w3-center" style="z-index:3;width:300px;font-weight:bold" id="mySidebar"><br>
-  <h3 class="w3-padding-64 w3-center">National Park Info</h3>
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-hide-large">CLOSE</a>
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button">SEARCH</a>
-  <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">ABOUT</a>
-</nav>
-
 <!-- Top menu on small screens -->
 <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
-  <span class="w3-left w3-padding">National Park Info</span>
+  <span class="w3-left w3-padding"><strong>National Park Info</strong></span>
   <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
 </header>
 
@@ -28,112 +39,96 @@
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px">
+<div class="w3-main">
 
   <!-- Push down content on small screens -->
   <div class="w3-hide-large" style="margin-top:83px"></div>
 
 
-  <!-- Upload section -->
+  <!-- Search Section -->
 
     <div class="w3-container w3-light-grey w3-padding-32 w3-padding-large" id="contact">
     <div class="mainContent">
-      <h1 class="w3-center"><b>National Park Info Kiosk</b></h1>
+      <h1 class="w3-center"><strong>National Park Info Kiosk</strong></h1>
 
 
-      <form id="upload-form" action="{{ url_for('search_result') }}" method="POST" enctype="multipart/form-data">
-        <input class="w3-input w3-border" type="text" name="query" placeholder="Search for a Park or Designation">
-      </form>
-      <!--<form action="/action_page.php" target="_blank">-->
-        <!--<div class="w3-section">-->
-          <!--<label>Name</label>-->
-          <!--<input class="w3-input w3-border" type="text" name="Name" required>-->
-        <!--</div>-->
-        <!--<div class="w3-section">-->
-          <!--<label>Email</label>-->
-          <!--<input class="w3-input w3-border" type="text" name="Email" required>-->
-        <!--</div>-->
-        <!--<div class="w3-section">-->
-          <!--<label>Message</label>-->
-          <!--<input class="w3-input w3-border" type="text" name="Message" required>-->
-        <!--</div>-->
-        <!--<button type="submit" class="w3-button w3-block w3-black w3-margin-bottom">Send Message</button>-->
-      <!--</form>-->
+        <form id="upload-form" action="{{ url_for('main_park_search') }}" method="POST" enctype="multipart/form-data">
+          <input class="w3-input" type="text" name="query" placeholder="Search for a Park or Designation">
+        </form>
         </div>
     </div>
 
 
 
-    <!-- About section -->
-  <div class="w3-container w3-dark-grey w3-center w3-text-light-grey w3-padding-32" id="about">
-    <h4><b>About The Site</b></h4>
-    <div class="w3-content w3-justify" style="max-width:600px">
+  <div class="w3-container w3-green">
+	  <form action=" {{ url_for('state_filter') }}" method="POST" enctype="multipart/form-data" class="state_form">
+			<h3>Search by State</h3>
+			<div class="form-group">
+				<div class="col-sm-10" style="display: inline-block">
+					<select class="form-control" id="state" name="state">
+						<option value="">N/A</option>
+						<option value="AK">Alaska</option>
+						<option value="AL">Alabama</option>
+						<option value="AR">Arkansas</option>
+						<option value="AZ">Arizona</option>
+						<option value="CA">California</option>
+						<option value="CO">Colorado</option>
+						<option value="CT">Connecticut</option>
+						<option value="DC">District of Columbia</option>
+						<option value="DE">Delaware</option>
+						<option value="FL">Florida</option>
+						<option value="GA">Georgia</option>
+						<option value="HI">Hawaii</option>
+						<option value="IA">Iowa</option>
+						<option value="ID">Idaho</option>
+						<option value="IL">Illinois</option>
+						<option value="IN">Indiana</option>
+						<option value="KS">Kansas</option>
+						<option value="KY">Kentucky</option>
+						<option value="LA">Louisiana</option>
+						<option value="MA">Massachusetts</option>
+						<option value="MD">Maryland</option>
+						<option value="ME">Maine</option>
+						<option value="MI">Michigan</option>
+						<option value="MN">Minnesota</option>
+						<option value="MO">Missouri</option>
+						<option value="MS">Mississippi</option>
+						<option value="MT">Montana</option>
+						<option value="NC">North Carolina</option>
+						<option value="ND">North Dakota</option>
+						<option value="NE">Nebraska</option>
+						<option value="NH">New Hampshire</option>
+						<option value="NJ">New Jersey</option>
+						<option value="NM">New Mexico</option>
+						<option value="NV">Nevada</option>
+						<option value="NY">New York</option>
+						<option value="OH">Ohio</option>
+						<option value="OK">Oklahoma</option>
+						<option value="OR">Oregon</option>
+						<option value="PA">Pennsylvania</option>
+						<option value="PR">Puerto Rico</option>
+						<option value="RI">Rhode Island</option>
+						<option value="SC">South Carolina</option>
+						<option value="SD">South Dakota</option>
+						<option value="TN">Tennessee</option>
+						<option value="TX">Texas</option>
+						<option value="UT">Utah</option>
+						<option value="VA">Virginia</option>
+						<option value="VT">Vermont</option>
+						<option value="WA">Washington</option>
+						<option value="WI">Wisconsin</option>
+						<option value="WV">West Virginia</option>
+						<option value="WY">Wyoming</option>
+					</select>
+					<button type="submit" class="btn btn-default">Go</button>
 
-    </div>
-      <!--<h4>My Name</h4>-->
-      <!--<p>Some text about me. I love taking photos of PEOPLE. I am lorem ipsum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure-->
-        <!--dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor-->
-        <!--incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.-->
-      <!--</p>-->
-      <!--<p>mail: example@example.com</p>-->
-      <!--<p>tel: 5353 35531</p>-->
-      <!--<hr class="w3-opacity">-->
-      <!--<h4 class="w3-padding-16">Technical Skills</h4>-->
-      <!--<p class="w3-wide">Photography</p>-->
-      <!--<div class="w3-white">-->
-        <!--<div class="w3-container w3-padding-small w3-center w3-grey" style="width:95%">95%</div>-->
-      <!--</div>-->
-      <!--<p class="w3-wide">Web Design</p>-->
-      <!--<div class="w3-white">-->
-        <!--<div class="w3-container w3-padding-small w3-center w3-grey" style="width:85%">85%</div>-->
-      <!--</div>-->
-      <!--<p class="w3-wide">Photoshop</p>-->
-      <!--<div class="w3-white">-->
-        <!--<div class="w3-container w3-padding-small w3-center w3-grey" style="width:80%">80%</div>-->
-      <!--</div>-->
-      <!--<p><button class="w3-button w3-light-grey w3-padding-large w3-margin-top w3-margin-bottom">Download Resume</button></p>-->
-      <!--<hr class="w3-opacity">-->
+				</div>
 
-      <!--<h4 class="w3-padding-16">How much I charge</h4>-->
-      <!--<div class="w3-row-padding" style="margin:0 -16px">-->
-        <!--<div class="w3-half w3-margin-bottom">-->
-          <!--<ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">-->
-            <!--<li class="w3-black w3-xlarge w3-padding-32">Basic</li>-->
-            <!--<li class="w3-padding-16">Web Design</li>-->
-            <!--<li class="w3-padding-16">Photography</li>-->
-            <!--<li class="w3-padding-16">5GB Storage</li>-->
-            <!--<li class="w3-padding-16">Mail Support</li>-->
-            <!--<li class="w3-padding-16">-->
-              <!--<h2>$ 10</h2>-->
-              <!--<span class="w3-opacity">per month</span>-->
-            <!--</li>-->
-            <!--<li class="w3-light-grey w3-padding-24">-->
-              <!--<button class="w3-button w3-white w3-padding-large">Sign Up</button>-->
-            <!--</li>-->
-          <!--</ul>-->
-        <!--</div>-->
-
-        <!--<div class="w3-half">-->
-          <!--<ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">-->
-            <!--<li class="w3-black w3-xlarge w3-padding-32">Pro</li>-->
-            <!--<li class="w3-padding-16">Web Design</li>-->
-            <!--<li class="w3-padding-16">Photography</li>-->
-            <!--<li class="w3-padding-16">50GB Storage</li>-->
-            <!--<li class="w3-padding-16">Endless Support</li>-->
-            <!--<li class="w3-padding-16">-->
-              <!--<h2>$ 25</h2>-->
-              <!--<span class="w3-opacity">per month</span>-->
-            <!--</li>-->
-            <!--<li class="w3-light-grey w3-padding-24">-->
-              <!--<button class="w3-button w3-white w3-padding-large">Sign Up</button>-->
-            <!--</li>-->
-          <!--</ul>-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
+			</div>
+	  </form>
   </div>
+</div>
 
-    <footer class="w3-green w3-center w3-padding-24">Powered by the National Park Service</footer>
 
 <!-- End page content -->
 </div>
