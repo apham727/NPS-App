@@ -1,0 +1,16 @@
+.h1 .h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5vw;
+}
+
+.h3 {
+    font-size: 1.5vw;
+}
+
+
+.list-group-item {
+    display: flex;
+    flex-direction: row;
+}
+

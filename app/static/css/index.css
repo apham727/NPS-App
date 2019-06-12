@@ -47,6 +47,10 @@ html, body {
     background-attachment: fixed;
 }
 
+.w3-container{
+    text-align: center;
+}
+
 
 .input-medium.bfh-states {
     width: 20px;
@@ -54,4 +58,48 @@ html, body {
 
 .state_form .btn-default {
     display: inline-block;
+}
+
+.mainSearch {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainSearch>p{
+    text-align: center;
+}
+
+.about {
+    text-align: left;
+    font-size: 1vw;
+}
+
+
+
+#upload-form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: transparent;
+}
+#category {
+    background-color: transparent;
+}
+
+.stateFilter {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    background-color: transparent;
 }
