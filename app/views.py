@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, flash, redirect
 from app import app
 from app.states import states
 from app.api_helper import *
+from urllib.parse import quote
 
 
 endpoint = "https://developer.nps.gov/api/v1/parks?api_key=1dPktcL1TRUd1cJLwxBWAgJuaVwmmwbvTMfe41rV"
@@ -16,6 +17,7 @@ def index():
 @app.route('/state_filter', methods=['POST'])
 def state_filter():
     state = request.form['state']
+    state = state.replace(" ", "_")
     # Request parks in the state
     endpoint = form_url("parks")
     url = endpoint + "&stateCode=" + state + "&fields=images"
@@ -31,7 +33,7 @@ def state_filter():
                                state=state)
 
 
-    return render_template("result_list.html",
+    return render_template("filter_result_list.html",
                            parks=park_resp["data"],
                            visitor_centers=visitor_center_resp["data"],
                            state_name=states[state])
@@ -41,90 +43,68 @@ def state_filter():
 @app.route('/main_park_search', methods=['POST'])
 def main_park_search():
     query = request.form['query']
-    ## First check if the query contained 'visitor center'.
-    vc_keywords = ["visitor", "center", "visitor center", "Visitor Center"]
-    if any(vc_keyword in query for vc_keyword in vc_keywords):
-        return vc_main_search(query) # Renders the visitor_center_result.html page for the top query
+    category = request.form['category']
+    keyword = query.split()[0] #Take first word of query
 
+    ## Check if the user is querying for visitor centers
+    if category == "visitor_centers":
+        return vc_main_search(keyword) # Renders the visitor_center_result.html page for the top query
 
-    ## then check if the query contains the phrase campground
-    camp_keywords = ["campground", "camp ground", "Campground", "Camp Ground"]
-    if any(camp_keyword in query for camp_keyword in camp_keywords):
-        return campground_main_search(query)
+    ## then check if the user is querying for campgrounds
+    if category == "campgrounds":
+        return campground_main_search(keyword)
 
-    ### Query the API for a park and take the first response
+    ## Otherwise, user is querying for parks
     endpoint = form_url("parks")
-    url = endpoint + "&q=" + query + "&fields=images"
-    json_resp = nps_call(url)
+    url = endpoint + "&q=" + keyword + "&fields=images"
+    park_resp = nps_call(url)
 
     # If the list is empty, the response returned nothing
-    if not json_resp["data"]:
+    if not park_resp["data"]:
         return render_template("bad_search.html",
-                               query=query)
+                               query=keyword)
 
-    # Otherwise, we take the top result
-    top_result = json_resp["data"][0]
-    park_code = top_result["parkCode"]
-
-    alerts = top_n(get_category_parkcode(park_code, "alerts"),4)
-    articles = top_n(get_category_parkcode(park_code, "articles"),4)
+    return render_template("park_result_list.html",
+                           parks=park_resp["data"],
+                           keyword=keyword)
 
 
+
+@app.route('/park_redirect', methods=['POST', 'GET'])
+def park_redirect():
+    park_code = request.args.get('park_code', None)
+    top_result = get_category_parkcode(park_code, "parks")[0] # We take the first result
     # In case the api doesn't return an image on the query
     try:
         image_url = top_result["images"][0]['url']
     except:
         image_url = ""
 
-    campgrounds = top_n(get_category_parkcode(park_code, "campgrounds"),4)
-    visitor_centers = top_n(get_category_parkcode(park_code, "visitorcenters"),4)
-    places = top_n(get_category_parkcode(park_code, "places"),4)
-
+    alerts = top_n(get_category_parkcode(park_code, "alerts"), 4)
+    articles = top_n(get_category_parkcode(park_code, "articles"), 4)
+    campgrounds = top_n(get_category_parkcode(park_code, "campgrounds"), 4)
+    visitor_centers = top_n(get_category_parkcode(park_code, "visitorcenters"), 4)
+    places = top_n(get_category_parkcode(park_code, "places"), 4)
     return render_template('park_result.html',
-                           name = top_result["name"],
-                           description = top_result["description"],
-                           image_url = image_url,
-                           news_articles = articles,
-                           alerts = alerts,
+                           name=top_result["name"],
+                           description=top_result["description"],
+                           image_url=image_url,
+                           news_articles=articles,
+                           alerts=alerts,
                            campgrounds=campgrounds,
                            visitor_centers=visitor_centers,
                            places=places)
 
 
-
-@app.route('/park_search')
-def park_search():
-    park_code = request.args.get('park_code', None)
-    top_result = get_category_parkcode(park_code, "parks")[0] # We take the first result
-    alerts = top_n(get_category_parkcode(park_code, "alerts"), 4)
-    articles = top_n(get_category_parkcode(park_code, "articles"), 4)
-
-    # In case the api doesn't return an image on the query
-    try:
-        image_url = top_result["images"][0]['url']
-    except:
-        image_url = ""
-
-    campgrounds = top_n(get_category_parkcode(park_code, "campgrounds"), 4)
-    visitor_centers = top_n(get_category_parkcode(park_code, "visitorcenters"), 4)
-    places = top_n(get_category_parkcode(park_code, "places"), 4)
-    return render_template('park_result.html',
-                           name = top_result["name"],
-                           description = top_result["description"],
-                           image_url = image_url,
-                           news_articles = articles, alerts = alerts)
-
-
 # Pass an optional 'query" parameter to query for visitor centers on that query string
-@app.route('/visitor_center')
+@app.route('/visitor_center', methods=['POST', 'GET'])
 def vc_main_search(query=""):
-
-    if not query: # We are calling this from the result_list.html
+    if not query: # We are calling this from the filter_result_list.html
         park_code = request.args.get('park_code', None)
         top_result = get_category_parkcode(park_code, "visitorcenters")[0]  # We take the first result
     else: # We are manually querying for a specific visitor center
         endpoint = form_url("visitorcenters")
-        url = endpoint + "&q=" + query
+        url = endpoint + "&q=" + query.split()[0]
         json_resp = nps_call(url)
         # If the list is empty, the response returned nothing
         if not json_resp["data"]:
@@ -143,12 +123,35 @@ def vc_main_search(query=""):
 # Searches for the campground
 def campground_main_search(query):
     endpoint = form_url("campgrounds")
-    url = endpoint + "&q=" + query + "&fields=images"
+    url = endpoint + "&q=" + query.split()[0]  # Take first word of query and form url with keyword
     json_resp = nps_call(url)
     # If the list is empty, the response returned nothing
     if not json_resp["data"]:
         return render_template("bad_search.html",
                                query=query)
+
+    top_result = json_resp["data"][0]  # Take the first result
+
+
+    return render_template('campground_result.html',
+                           name = top_result["name"],
+                           description=top_result["description"])
+
+
+@app.route('/campground_redirect', methods=['POST', 'GET'])
+def campground_redirect():
+    campground_name = request.args.get('campground_name', None)
+    campground_keyword = campground_name.split()[0] # Split on whitespace and take first word
+    endpoint = form_url("campgrounds")
+    url = endpoint + "&q=" + campground_keyword + "&fields=images"
+
+    json_resp = nps_call(url)
+    print(url)
+    print(json_resp)
+    # If the list is empty, the response returned nothing
+    if not json_resp["data"]:
+        return render_template("bad_search.html",
+                               query=id)
 
     top_result = json_resp["data"][0]  # Take the first result
 
@@ -163,4 +166,3 @@ def campground_main_search(query):
                            description=top_result["description"],
                            image_url=image_url,
                            reseverationsUrl=top_result["reservationsUrl"])
-

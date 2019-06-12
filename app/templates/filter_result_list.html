@@ -7,21 +7,8 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-formhelpers.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css.map')}}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css.map')}}">
-
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js.map') }}"></script>
-
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-formhelpers.min.js') }}"></script>
-
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-formhelpers-languages.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-formhelpers-states.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-3.4.1.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
-
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
@@ -50,7 +37,7 @@
     <ul class="list-group">
         {% for park in parks %}
             <li class="list-group-item">
-                <a href="{{ url_for('park_search', park_code=park['parkCode']) }}"> {{ park["name"] }} </a>
+                <a href="{{ url_for('park_redirect', park_code=park['parkCode']) }}"> {{ park["name"] }} </a>
             </li>
         {% endfor %}
     </ul>

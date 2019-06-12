@@ -3,25 +3,22 @@
 <title>National Park Info</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search_result.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
 
-<style>
-body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-.w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
-.w3-third img:hover{opacity: 1}
-.titleSection {
-    height: 200px;
-}
-</style>
+</head>
 <body class="w3-light-grey w3-content">
-
 
 <!-- Top menu on small screens -->
 <header class="w3-container w3-top w3-hide-large w3-white w3-xlarge w3-padding-16">
-  <span class="w3-left w3-padding">National Park Info</span>
+  <span class="w3-left w3-padding"><strong>National Park Info</strong></span>
   <a href="javascript:void(0)" class="w3-right w3-button w3-white" onclick="w3_open()">☰</a>
 </header>
 
@@ -35,28 +32,22 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   <div class="w3-hide-large" style="margin-top:83px"></div>
 
 
-
-  <!-- Articles -->
-  <div class="w3-container">
-    <div class="w3-content">
-        <div class="titleSection">
-            <br>
-            <center><h1><strong>{{ name }}</strong></h1> </center>
-<!--            <img src={{ image_url }} alt="Item" width="300">-->
-
-        </div>
-
-        <p> {{ description}} </p>
-
-        <a href="{{ url }}" target="_blank">Find More Information About the Visitor Center here</a>
-
-    </div>
-  </div>
+<!--    Park List Section -->
+    <h2>Parks found for {{ keyword }}</h2>
+    <ul class="list-group">
+        {% for park in parks %}
+            <li class="list-group-item">
+                <a href="{{ url_for('park_redirect', park_code=park['parkCode']) }}"> {{ park["name"] }} </a>
+            </li>
+        {% endfor %}
+    </ul>
 
 
 
 
-  <footer class="w3-green w3-center w3-padding-24">Powered by the National Park Service</footer>
+
+</div>
+
 
 <!-- End page content -->
 </div>
