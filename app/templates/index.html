@@ -38,31 +38,33 @@
     <div class="mainContent">
       <h1 class="w3-center"><strong>National Park Info Kiosk</strong></h1>
 
-
-        <form id="upload-form" action="{{ url_for('main_park_search') }}" method="POST" enctype="multipart/form-data">
-          	<input class="w3-input" type="text" name="query" placeholder="Search for a Park, Visitor Center, or Campground by Keyword" style="display: inline-block">
-			<div class="form-group" style="display: inline-block">
-				<div class="col-sm-10">
-					<select class="form-control" id="category" name="category">
-						<option value="parks">Parks</option>
-						<option value="visitor_centers">Visitor Centers</option>
-						<option value="campgrounds">Campgrounds</option>
-					</select>
+		<div class="mainSearch">
+			<form id="upload-form" action="{{ url_for('main_park_search') }}" method="POST" enctype="multipart/form-data">
+				<input class="w3-input" type="text" name="query" placeholder="Search for a Park, Visitor Center, or Campground by Keyword">
+				<p style="flex: 1 1 3%">Search by: </p>
+				<div class="form-group" style="flex: 1 1 10%">
+					<div class="col-sm-10">
+						<select class="form-control" id="category" name="category">
+							<option value="parks">Parks</option>
+							<option value="visitor_centers">Visitor Centers</option>
+							<option value="campgrounds">Campgrounds</option>
+						</select>
+					</div>
 				</div>
-			</div>
-        </form>
+			</form>
+		</div>
         </div>
     </div>
 
 
 
   <div class="w3-container w3-green">
-	  <form action=" {{ url_for('state_filter') }}" method="POST" enctype="multipart/form-data" class="state_form">
-			<h3>Search by State</h3>
-			<div class="form-group">
-				<div class="col-sm-10" style="display: inline-block">
+	  <h3>Search by State</h3>
+
+	  <div class="stateFilter">
+		  <form action=" {{ url_for('state_filter') }}" method="POST" enctype="multipart/form-data" class="state_form">
+				<div class="form-group">
 					<select class="form-control" id="state" name="state">
-						<option value="">N/A</option>
 						<option value="AK">Alaska</option>
 						<option value="AL">Alabama</option>
 						<option value="AR">Arkansas</option>
@@ -118,37 +120,28 @@
 					</select>
 					<button type="submit" class="btn btn-default">Go</button>
 				</div>
-			</div>
-	  </form>
+		  </form>
+	  </div>
   </div>
 </div>
 
 
-<!-- End page content -->
+<div class="w3-container w3-light-grey">
+	<h2>About the Site</h2>
+	<div class="about">
+		<p>The National Park Info Kiosk is a webapp that allows users to search for various information regarding national parks, including nearby campgrounds, visitor centers, places, as well as relevant people.
+			<br><br>
+			Use the search bar at the top to search for parks, campgrounds, or visitor centers by keyword. Just make sure
+			to select which category you're filtering by!
+
+			Otherwise, you can use the state filter at the bottom to see what parks and visitor centers
+			are available in each state.
+		</p>
+	</div>
+</p>
 </div>
 
-<script>
-// Script to open and close sidebar
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
-
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-
-</script>
-
-
+<!-- End page content -->
+</div>
 </body>
 </html>
