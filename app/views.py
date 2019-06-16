@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, url_for
 from app import app
 from app.states import states
 from app.api_helper import *
@@ -12,6 +12,10 @@ HEADERS = {'User-Agent': 'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.17 (KHTM
 @app.route('/index')
 def index():
     return render_template('index.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 @app.route('/state_filter', methods=['POST'])
@@ -85,6 +89,9 @@ def park_redirect():
     campgrounds = top_n(get_category_parkcode(park_code, "campgrounds"), 4)
     visitor_centers = top_n(get_category_parkcode(park_code, "visitorcenters"), 4)
     places = top_n(get_category_parkcode(park_code, "places"), 4)
+    people = top_n(get_category_parkcode(park_code, "people"), 4)
+    print(people)
+
     return render_template('park_result.html',
                            name=top_result["name"],
                            description=top_result["description"],
@@ -93,6 +100,7 @@ def park_redirect():
                            alerts=alerts,
                            campgrounds=campgrounds,
                            visitor_centers=visitor_centers,
+                           people=people,
                            places=places)
 
 
@@ -138,12 +146,17 @@ def campground_main_search(query):
                            description=top_result["description"])
 
 
+@app.route('/explanation')
+def explanation():
+    return render_template('explanation.html')
+
+
 @app.route('/campground_redirect', methods=['POST', 'GET'])
 def campground_redirect():
     campground_name = request.args.get('campground_name', None)
     campground_keyword = campground_name.split()[0] # Split on whitespace and take first word
     endpoint = form_url("campgrounds")
-    url = endpoint + "&q=" + campground_keyword + "&fields=images"
+    url = endpoint + "&q=" + campground_keyword
 
     json_resp = nps_call(url)
     print(url)
@@ -151,7 +164,7 @@ def campground_redirect():
     # If the list is empty, the response returned nothing
     if not json_resp["data"]:
         return render_template("bad_search.html",
-                               query=id)
+                               query=campground_name)
 
     top_result = json_resp["data"][0]  # Take the first result
 

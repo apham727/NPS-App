@@ -6,12 +6,11 @@
 <head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/result_list.css')}}">
 
 </head>
 <body class="w3-light-grey w3-content">
@@ -31,13 +30,31 @@
   <!-- Push down content on small screens -->
   <div class="w3-hide-large" style="margin-top:83px"></div>
 
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="">NPS Kiosk</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href=" {{ url_for('about') }}">About <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+    </nav>
+
 
 <!--    Park List Section -->
-    <h2>Parks found in {{ state }}</h2>
+    <h1>Parks found in {{ state }}</h1>
     <ul class="list-group">
         {% for park in parks %}
             <li class="list-group-item">
-                <a href="{{ url_for('park_redirect', park_code=park['parkCode']) }}"> {{ park["name"] }} </a>
+                <div class="list_text" style="flex: 2 1 60%">
+                    <h3><a href="{{ url_for('park_redirect', park_code=park['parkCode']) }}"> {{ park["name"] }} </a></h3>
+                    <p> {{park["description"] }} </p>
+                </div>
+                <div class="imageContainer" style="flex: 1 1 40%">
+                    <img src=" {{ park['images'][0]['url'] }}">
+                </div>
             </li>
         {% endfor %}
     </ul>
@@ -49,41 +66,16 @@
     <ul class="list-group">
         {% for visitor_center in visitor_centers %}
             <li class="list-group-item">
-                <a href=" {{ url_for('vc_main_search', park_code=visitor_center['parkCode']) }} "> {{ visitor_center["name"] }} </a>
+                <h3 style="flex: 1 1 30%"><a href=" {{ url_for('vc_main_search', park_code=visitor_center['parkCode']) }} "> {{ visitor_center["name"] }} </a></h3>
+                <p style="flex: 3 1 70%;">   {{ visitor_center["description"] }}  </p>
             </li>
         {% endfor %}
 
     </ul>
-
-
+</div>
 
 </div>
 
-
-<!-- End page content -->
-</div>
-
-<script>
-// Script to open and close sidebar
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
-
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-
-</script>
 
 
 </body>

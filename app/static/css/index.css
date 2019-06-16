@@ -9,6 +9,10 @@ html, body {
     margin: 0 0;
 }
 
+::placeholder {
+    color: black;
+}
+
 
 .w3-light-grey.w3-content {
     padding: 0px 0px;
@@ -37,7 +41,7 @@ html, body {
 }
 
 .w3-container.w3-light-grey.w3-padding-32.w3-padding-large {
-    background-image: url("../img/yosemite.jpg");
+    background-image: url("../img/moab.jpg");
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -84,9 +88,12 @@ html, body {
     flex-direction: row;
     width: 100%;
     background-color: transparent;
+    align-items: baseline;
 }
 #category {
     background-color: transparent;
+    border: 2px solid black;
+    color: black;
 }
 
 .stateFilter {
@@ -102,4 +109,26 @@ html, body {
     flex-direction: row;
     width: 100%;
     background-color: transparent;
+}
+
+#filter-button {
+    margin-left: 20px;
+}
+
+
+
+ul.navbar-nav li {
+    margin-left: 50px;
+}
+
+a.navbar-brand {
+    font-size: 2vw;
+}
+
+ul.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: 50px;
+    font-size: 1vw;
 }

@@ -10,8 +10,9 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css')}}">
 <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/result_list.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
+
 
 </head>
 <body class="w3-light-grey w3-content">
@@ -25,11 +26,28 @@
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
+
+
 <!-- !PAGE CONTENT! -->
 <div class="w3-main">
 
+
+
   <!-- Push down content on small screens -->
   <div class="w3-hide-large" style="margin-top:83px"></div>
+
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="">NPS Kiosk</a>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href=" {{ url_for('about') }}">About <span class="sr-only">(current)</span></a>
+          </li>
+        </ul>
+    </nav>
+
 
 
 <!--    Park List Section -->
@@ -42,38 +60,7 @@
         {% endfor %}
     </ul>
 
-
-
-
-
 </div>
-
-
-<!-- End page content -->
-</div>
-
-<script>
-// Script to open and close sidebar
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-    document.getElementById("myOverlay").style.display = "block";
-}
-
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-    document.getElementById("myOverlay").style.display = "none";
-}
-
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-
-</script>
-
 
 </body>
 </html>

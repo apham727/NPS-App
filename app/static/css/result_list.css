@@ -1,3 +1,8 @@
+body,h1,h2,h3,h4,h5 {
+    font-family: 'Avenir Next LT W02 Bold', helvetic
+    a, arial, sans-serif;
+}
+
 .h1 .h2 {
     text-align: center;
     font-weight: bold;
@@ -8,9 +13,31 @@
     font-size: 1.5vw;
 }
 
-
-.list-group-item {
+.personContainer {
     display: flex;
     flex-direction: row;
+    margin-bottom: 20px;
+}
+
+img {
+    max-width: 50%;
+    height: auto;
+}
+
+
+ul.navbar-nav li {
+    margin-left: 50px;
+}
+
+a.navbar-brand {
+    font-size: 2vw;
+}
+
+ul.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: 50px;
+    font-size: 1vw;
 }
 

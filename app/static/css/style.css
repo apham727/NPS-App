@@ -1,3 +1,23 @@
 body,h1,h2,h3,h4,h5 {
     font-family: 'Avenir Next LT W02 Bold', helvetica, arial, sans-serif;
 }
+.w3-content {
+    max-width: none;
+}
+
+
+ul.navbar-nav li {
+    margin-left: 50px;
+}
+
+a.navbar-brand {
+    font-size: 2vw;
+}
+
+ul.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: 50px;
+    font-size: 1vw;
+}

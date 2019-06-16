@@ -46,6 +46,8 @@ html, body {
     width: 100% !important;
     margin: 0 auto;
     flex: 1 1 100%;
+    max-width: 1200px;
+    width: 700px;
 }
 
 .w3-container {
@@ -54,5 +56,40 @@ html, body {
     flex-direction: column;
     justify-content: center;
     width: 100% !important;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
 }
 
+.personContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+imageContainer {
+    max-width: 50%;
+    display: flex;
+    justify-content: right;
+}
+
+img {
+    flex: 1 1 50%;
+    height: auto;
+}
+
+ul.navbar-nav li {
+    margin-left: 50px;
+}
+
+a.navbar-brand {
+    font-size: 2vw;
+}
+
+ul.navbar-nav {
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: 50px;
+    font-size: 1vw;
+}
