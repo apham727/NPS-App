@@ -20,6 +20,10 @@ def about():
 
 @app.route('/state_filter', methods=['POST'])
 def state_filter():
+    """
+    Returns a list of parks and visitor centers by states.
+    :return: a rendered html template with a list of parks/visitor centers corresponding to the inputted state.
+    """
     state = request.form['state']
     state = state.replace(" ", "_")
     # Request parks in the state
@@ -46,6 +50,15 @@ def state_filter():
 
 @app.route('/main_park_search', methods=['POST'])
 def main_park_search():
+    """
+    The main search function of the application. Single-word queries are passed to the appropriate
+    API route depending on whether the user picks parks, campgrounds, or visitor centers.
+
+    Multi-word queries are automatically truncated to single-word queries to fit the requirements
+    of the NPS API.
+    :return: a rendered template with a list of parks/campgrounds/visitor centers depending on what the user
+    inputted.
+    """
     query = request.form['query']
     category = request.form['category']
     keyword = query.split()[0] #Take first word of query
@@ -76,6 +89,11 @@ def main_park_search():
 
 @app.route('/park_redirect', methods=['POST', 'GET'])
 def park_redirect():
+    """
+    Used as an internal redirect to render a park result page whenever a user clicks on a park link from a
+    list of parks.
+    :return: the rendered park result page for the selected park.
+    """
     park_code = request.args.get('park_code', None)
     top_result = get_category_parkcode(park_code, "parks")[0] # We take the first result
     # In case the api doesn't return an image on the query
@@ -88,6 +106,7 @@ def park_redirect():
                 top_result["addresses"][0]["city"] + "," + \
                 top_result["addresses"][0]["stateCode"]
 
+    # Get other information to display on the page
     alerts = top_n(get_category_parkcode(park_code, "alerts"), 4)
     articles = top_n(get_category_parkcode(park_code, "articles"), 4)
     campgrounds = top_n(get_category_parkcode(park_code, "campgrounds"), 4)
@@ -113,6 +132,12 @@ def park_redirect():
 # Pass an optional 'query" parameter to query for visitor centers on that query string
 @app.route('/visitor_center', methods=['POST', 'GET'])
 def vc_main_search(query=""):
+    """
+    Used as a redirect/query function for the visitor center.
+    :param query: optional parameter which is passed whenever a visitor center is called from the main
+    search bar.
+    :return: a visitor center result page corresponding to the selected visitor center
+    """
     if not query: # We are calling this from the filter_result_list.html
         park_code = request.args.get('park_code', None)
         top_result = get_category_parkcode(park_code, "visitorcenters")[0]  # We take the first result
@@ -141,6 +166,11 @@ def vc_main_search(query=""):
 
 # Searches for the campground
 def campground_main_search(query):
+    """
+
+    :param query:
+    :return:
+    """
     endpoint = form_url("campgrounds")
     url = endpoint + "&q=" + query.split()[0]  # Take first word of query and form url with keyword
     json_resp = nps_call(url)
@@ -168,6 +198,10 @@ def explanation():
 
 @app.route('/campground_redirect', methods=['POST', 'GET'])
 def campground_redirect():
+    """
+    Called upon an internal redirect when a user clicks on an internal link to a campground page.
+    :return: A campground result page corresponding to the selected campground.
+    """
     campground_name = request.args.get('campground_name', None)
     campground_keyword = campground_name.split()[0] # Split on whitespace and take first word
     endpoint = form_url("campgrounds")
