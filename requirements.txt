@@ -32,6 +32,7 @@ future==0.16.0
 futures==3.1.1
 gmplot==1.2.0
 googlemaps==2.5.1
+gunicorn==19.9.0
 hjson==3.0.0
 idna==2.6
 itsdangerous==0.24
