@@ -93,3 +93,9 @@ ul.navbar-nav {
     margin-right: 50px;
     font-size: 1vw;
 }
+
+#map {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}

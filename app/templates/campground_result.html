@@ -17,6 +17,12 @@
             background-image: url('{{ image_url }}');
         }
     </style>
+    <script type="text/javascript">
+        var address = "{{ address }}"
+    </script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Jh4Bk7_fUVPhjjSzUg1v2a9IJW82umk&callback=initMap"
+    async defer></script>
 </head>
 
 <style>
@@ -70,6 +76,10 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <p> {{ description}} </p>
 
         <a href="{{ reservationsUrl}}" target="_blank">Reserve your spot at this campground here</a>
+
+        <div style="height: 600px; width:100%; margin: 50px; position: relative" >
+          <div id="map"></div>
+        </div>
 
     </div>
   </div>

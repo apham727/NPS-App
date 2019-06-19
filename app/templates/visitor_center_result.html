@@ -11,14 +11,23 @@
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/search_result.css')}}">
 
-<style>
-body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
-.w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
-.w3-third img:hover{opacity: 1}
-.titleSection {
-    height: 200px;
-}
-</style>
+<head>
+    <script type="text/javascript">
+        var address = "{{ address }}"
+    </script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Jh4Bk7_fUVPhjjSzUg1v2a9IJW82umk&callback=initMap"
+    async defer></script>
+    <style>
+    body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+    .w3-third img{margin-bottom: -6px; opacity: 0.8; cursor: pointer}
+    .w3-third img:hover{opacity: 1}
+    .titleSection {
+        height: 200px;
+    }
+    </style>
+</head>
+
 <body class="w3-light-grey w3-content">
 
 
@@ -63,6 +72,10 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <p> {{ description}} </p>
 
         <a href="{{ url }}" target="_blank">Find More Information About the Visitor Center here</a>
+
+        <div style="height: 600px; width:100%; margin: 50px; position: relative" >
+          <div id="map"></div>
+        </div>
 
     </div>
   </div>

@@ -60,7 +60,7 @@ def main_park_search():
 
     ## Otherwise, user is querying for parks
     endpoint = form_url("parks")
-    url = endpoint + "&q=" + keyword + "&fields=images"
+    url = endpoint + "&q=" + keyword + "&fields=images,addresses"
     park_resp = nps_call(url)
 
     # If the list is empty, the response returned nothing
@@ -84,16 +84,22 @@ def park_redirect():
     except:
         image_url = ""
 
+    address = top_result["addresses"][0]["line1"] + "," + \
+                top_result["addresses"][0]["city"] + "," + \
+                top_result["addresses"][0]["stateCode"]
+
     alerts = top_n(get_category_parkcode(park_code, "alerts"), 4)
     articles = top_n(get_category_parkcode(park_code, "articles"), 4)
     campgrounds = top_n(get_category_parkcode(park_code, "campgrounds"), 4)
     visitor_centers = top_n(get_category_parkcode(park_code, "visitorcenters"), 4)
     places = top_n(get_category_parkcode(park_code, "places"), 4)
     people = top_n(get_category_parkcode(park_code, "people"), 4)
-    print(people)
+    print("address is " + address)
+
 
     return render_template('park_result.html',
                            name=top_result["name"],
+                           address=address,
                            description=top_result["description"],
                            image_url=image_url,
                            news_articles=articles,
@@ -120,11 +126,16 @@ def vc_main_search(query=""):
                                    query=query)
 
         top_result = json_resp["data"][0] # Take the first result
+    address = top_result["addresses"][0]["line1"] + "," + \
+                  top_result["addresses"][0]["city"] + "," + \
+                  top_result["addresses"][0]["stateCode"]
 
+    print(address)
 
     return render_template('visitor_center_result.html',
                            name=top_result["name"],
                            description=top_result["description"],
+                           address=address,
                            url=top_result['url'])
 
 
@@ -139,10 +150,14 @@ def campground_main_search(query):
                                query=query)
 
     top_result = json_resp["data"][0]  # Take the first result
+    address = top_result["addresses"][0]["line1"] + "," + \
+                top_result["addresses"][0]["city"] + "," + \
+                top_result["addresses"][0]["stateCode"]
 
 
     return render_template('campground_result.html',
                            name = top_result["name"],
+                           address=address,
                            description=top_result["description"])
 
 

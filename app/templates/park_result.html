@@ -17,6 +17,13 @@
             background-image: url('{{ image_url }}');
         }
     </style>
+    <script type="text/javascript">
+        var address = "{{ address }}"
+    </script>
+    <script src="{{ url_for('static', filename='js/map.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Jh4Bk7_fUVPhjjSzUg1v2a9IJW82umk&callback=initMap"
+    async defer></script>
+
 </head>
 
 <style>
@@ -25,6 +32,7 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 .w3-third img:hover{opacity: 1}
 </style>
 <body class="w3-light-grey">
+
 
 
 <!-- Top menu on small screens -->
@@ -79,6 +87,9 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
                 <li class="list-group-item"><p><a href = "{{ news_article['url'] }}" target="_blank"> {{news_article['title']}} </a></p></li>
             {% endfor %}
         </ul>
+        <div style="height: 600px; width:100%; margin: 50px; position: relative" >
+          <div id="map"></div>
+        </div>
 
         <h3>Nearby Places</h3>
         <ul class="list-group">
@@ -145,6 +156,7 @@ body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 <!-- End page content -->
 </div>
+
 
 </body>
 </html>

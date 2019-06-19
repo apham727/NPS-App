@@ -26,7 +26,11 @@ def form_url(category):
 def get_category_parkcode(parkcode, category):
     endpoint = form_url(category)
     url = endpoint + "&parkCode=" + str(parkcode)
-    if category == "parks" or category=="people" or category=="places":
+    if category=="people" or category=="places":
         url = url + "&fields=images" # Lets NPS API know to return image urls
+    if category == "parks":
+        url = url + "&fields=images,addresses"
+    if category == "visitorcenters" or category == "campgrounds":
+        url = url + "&fields=addresses"
     return nps_call(url)["data"]
 
