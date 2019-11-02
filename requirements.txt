@@ -81,7 +81,7 @@ virtualenv-clone==0.2.6
 virtualenvwrapper-win==1.2.2
 watson-developer-cloud==0.26.1
 wcwidth==0.1.7
-Werkzeug==0.12
+Werkzeug==0.15.3
 wsgi-request-logger==0.4.6
 zappa==0.44.3
 zope.interface==4.4.3
