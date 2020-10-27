@@ -18,7 +18,7 @@ colorama==0.3.7
 configobj==5.0.6
 convert==0.1.2
 cookies==2.2.1
-cryptography==2.0.3
+cryptography==3.2
 cycler==0.10.0
 darksky==0.3
 DateTime==4.2
